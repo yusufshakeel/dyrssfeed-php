@@ -1,0 +1,27 @@
+{
+  "name": "dyrssfeed-php",
+  "version": "0.1.0",
+  "description": "Generate RSS feed for your blogs and websites.",
+  "main": "index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yusufshakeel/dyrssfeed-php.git"
+  },
+  "keywords": [
+    "rss",
+    "rss-feed",
+    "rss-generator",
+    "rss-feed-php",
+    "rss-feed-generator-php",
+    "rss-generator-php"
+  ],
+  "author": "Yusuf Shakeel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yusufshakeel/dyrssfeed-php/issues"
+  },
+  "homepage": "https://github.com/yusufshakeel/dyrssfeed-php#readme"
+}
