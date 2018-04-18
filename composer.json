@@ -4,6 +4,7 @@
     "keywords": ["rss", "rss-feed", "rss-generator", "rss-feed-php", "rss-feed-generator-php", "rss-generator-php"],
     "type": "library",
     "homepage": "https://github.com/yusufshakeel/dyrssfeed-php",
+    "license": "MIT",
     "authors": [
         {
             "name": "Yusuf Shakeel",
