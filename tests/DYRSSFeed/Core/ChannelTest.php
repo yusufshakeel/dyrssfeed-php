@@ -17,12 +17,10 @@ use DYRSSFeed\Core\Channel as Channel;
 
 class ChannelTest extends \PHPUnit_Framework_TestCase
 {
-    private $_channelObj;
-
     protected function setUp()
     {
-        // this is the channel elements config
-        $channelConfig = array(
+        // this is the channel elements data
+        $channelElements = array(
             'title' => 'Example Blog',
             'link' => 'https://example.com',
             'description' => 'This is my blog.',
@@ -36,78 +34,119 @@ class ChannelTest extends \PHPUnit_Framework_TestCase
                 'description' => 'This is the blog image title.',
                 'width' => 88,
                 'height' => 31
+            ),
+            'copyright' => 'Copyright (c) 2018 Yusuf Shakeel. All rights reserved.',
+            'pubDate' => 'Sun, 15 Apr 2018 20:30:40 UTC',
+            'ttl' => 60,
+            'skipDays' => array(
+                'day' => array(
+                    'Sunday',
+                    'Tuesday',
+                    'Thursday',
+                    'Saturday'
+                )
+            ),
+            'skipHours' => array(
+                'hour' => array(0, 10, 20)
             )
 
         );
 
-        $this->_channelObj = new Channel($channelConfig);
+        Channel::$elements = $channelElements;
     }
 
     public function testChannelTitle()
     {
-        $this->assertEquals('Example Blog', $this->_channelObj->title);
+        $this->assertEquals('Example Blog', Channel::$elements['title']);
     }
 
     public function testChannelLink()
     {
-        $this->assertEquals('https://example.com', $this->_channelObj->link);
+        $this->assertEquals('https://example.com', Channel::$elements['link']);
     }
 
     public function testChannelDescription()
     {
-        $this->assertEquals('This is my blog.', $this->_channelObj->description);
+        $this->assertEquals('This is my blog.', Channel::$elements['description']);
     }
 
     public function testChannelLanguage()
     {
-        $this->assertEquals('en-us', $this->_channelObj->language);
+        $this->assertEquals('en-us', Channel::$elements['language']);
     }
 
     public function testChannelCategory()
     {
-        $this->assertEquals(null, $this->_channelObj->category);
+        $this->assertEquals(null, Channel::$elements['category']);
     }
 
-    public function testChannelImage_isIncluded()
+    public function testImage_isIncluded()
     {
-        $imageElement = $this->_channelObj->image;
+        $imageElement = Channel::$elements['image'];
         $this->assertEquals(true, $imageElement['_isIncluded']);
     }
 
-    public function testChannelImage_title()
+    public function testImage_title()
     {
-        $imageElement = $this->_channelObj->image;
+        $imageElement = Channel::$elements['image'];
         $this->assertEquals('This is the blog logo.', $imageElement['title']);
     }
 
-    public function testChannelImage_url()
+    public function testImage_url()
     {
-        $imageElement = $this->_channelObj->image;
+        $imageElement = Channel::$elements['image'];
         $this->assertEquals('https://example.com/path/to/some/image/file.png', $imageElement['url']);
     }
 
-    public function testChannelImage_link()
+    public function testImage_link()
     {
-        $imageElement = $this->_channelObj->image;
+        $imageElement = Channel::$elements['image'];
         $this->assertEquals('https://example.com', $imageElement['link']);
     }
 
-    public function testChannelImage_description()
+    public function testImage_description()
     {
-        $imageElement = $this->_channelObj->image;
+        $imageElement = Channel::$elements['image'];
         $this->assertEquals('This is the blog image title.', $imageElement['description']);
     }
 
-    public function testChannelImage_width()
+    public function testImage_width()
     {
-        $imageElement = $this->_channelObj->image;
+        $imageElement = Channel::$elements['image'];
         $this->assertEquals(88, $imageElement['width']);
     }
 
-    public function testChannelImage_height()
+    public function testImage_height()
     {
-        $imageElement = $this->_channelObj->image;
+        $imageElement = Channel::$elements['image'];
         $this->assertEquals(31, $imageElement['height']);
+    }
+
+    public function testCopyright()
+    {
+        $this->assertEquals('Copyright (c) 2018 Yusuf Shakeel. All rights reserved.', Channel::$elements['copyright']);
+    }
+
+    public function testPubDate()
+    {
+        $this->assertEquals('Sun, 15 Apr 2018 20:30:40 UTC', Channel::$elements['pubDate']);
+    }
+
+    public function testTtl()
+    {
+        $this->assertEquals(60, Channel::$elements['ttl']);
+    }
+
+    public function testSkipDays_day()
+    {
+        $skipDaysElement = Channel::$elements['skipDays'];
+        $this->assertEquals(array('Sunday', 'Tuesday', 'Thursday', 'Saturday'), $skipDaysElement['day']);
+    }
+
+    public function testSkipHours_hour()
+    {
+        $skipHoursElement = Channel::$elements['skipHours'];
+        $this->assertEquals(array(0, 10, 20), $skipHoursElement['hour']);
     }
 
 }

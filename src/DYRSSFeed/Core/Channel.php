@@ -17,7 +17,7 @@ namespace DYRSSFeed\Core;
 /**
  * This class configures the channel element of the RSS feed.
  *
- * Class ChannelElement
+ * Class Channel
  * @package DYRSSFeed\Core
  */
 class Channel
@@ -28,7 +28,7 @@ class Channel
      *
      * @var array
      */
-    private $_elements = array(
+    public static $elements = array(
 
         /**
          * This is the title of the channel.
@@ -59,6 +59,7 @@ class Channel
          * (Optional)
          *
          * Example: US English like "en-us"
+         * Default: 'en-us'
          */
         'language' => 'en-us',
 
@@ -67,7 +68,6 @@ class Channel
          * (Optional)
          *
          * Example: "Tour Travel Food Vlogs Blogs"
-         *
          * Default: null
          */
         'category' => null,
@@ -135,32 +135,64 @@ class Channel
              * Max value: 400
              */
             'height' => 31
+        ),
+
+        /**
+         * Specifies about copyrighted content.
+         * (Optional)
+         *
+         * Example: "Copyright (c) 2018 Yusuf Shakeel. All rights reserved."
+         * Default: null
+         */
+        'copyright' => null,
+
+        /**
+         * Specifies the last publication date of the feed content.
+         * (Optional)
+         *
+         * Example: Sun, 15 Apr 2018 20:30:40 UTC
+         * Default: null
+         */
+        'pubDate' => null,
+
+        /**
+         * ttl or Time To Live
+         * Specifies the number of minutes the feed can be cached before
+         * it is refetched from the source.
+         * (Optional)
+         *
+         * Example: 180  i.e. (180/60) = 3 hours
+         * Default: null
+         */
+        'ttl' => null,
+
+        /**
+         * This specifies the days where aggregators would skip
+         * updating the feed.
+         * (Optional)
+         */
+        'skipDays' => array(
+            /**
+             * This specifies the name of the days to skip.
+             * (Required)
+             * From: Sunday, Monday, ..., Saturday
+             */
+            'day' => array()
+        ),
+
+        /**
+         * This specifies the hours where aggregators would skip
+         * updating the feed.
+         * (Optional)
+         */
+        'skipHours' => array(
+            /**
+             * This specifies the hours to skip.
+             * (Required)
+             * From 0 to 23
+             */
+            'hour' => array()
         )
 
     );
-
-    /**
-     * Channel constructor.
-     * @param array $config
-     */
-    public function __construct($config = array())
-    {
-        foreach ($config as $key => $value) {
-            $this->_elements[$key] = $value;
-        }
-    }
-
-    /**
-     * This will return the value of the element.
-     *
-     * @param string $element
-     * @return mixed|null
-     */
-    public function __get($element)
-    {
-        if (array_key_exists($element, $this->_elements)) {
-            return $this->_elements[$element];
-        }
-        return null;
-    }
 }

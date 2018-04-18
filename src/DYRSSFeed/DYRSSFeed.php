@@ -14,26 +14,48 @@
 namespace DYRSSFeed;
 
 use DYRSSFeed\Core\Channel as Channel;
+use DYRSSFeed\Core\Config;
+use DYRSSFeed\Utilities\CreateFile;
+use DYRSSFeed\Utilities\WriteItems as WriteItems;
 
 class DYRSSFeed
 {
     /**
-     * This is an object of the Channel class.
-     * @var Channel Channel
-     */
-    private $_channelObj;
-
-    /**
      * DYRSSFeed constructor.
-     * @param array $channelConfig This holds the configuration for the channel element of RSS feed.
+     * @param array $channelData This holds the channel elements data.
+     * @param array $config This holds the configuration data.
      */
-    public function __construct($channelConfig = array())
+    public function __construct($channelData = array(), $config = array())
     {
-        $this->_channelObj = new Channel($channelConfig);
+        Channel::$elements = $channelData;
+
+        if (isset($config['outputFile'])) {
+            Config::$outputFile = $config['outputFile'];
+        }
+        if (isset($config['database'])) {
+            Config::$database = $config['database'];
+        }
     }
 
-    public function getChannelElement($element)
+    public function openFile()
     {
-        return $this->_channelObj->$element;
+        CreateFile::openingTags();
     }
+
+    public function addChannel()
+    {
+        CreateFile::appendChannelElements();
+    }
+
+    public function addItems($data)
+    {
+        CreateFile::appendItems($data);
+    }
+
+    public function closeFile()
+    {
+        CreateFile::closingTags();
+    }
+
+
 }
